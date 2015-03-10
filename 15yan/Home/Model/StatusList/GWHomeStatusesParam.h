@@ -17,4 +17,6 @@
 
 @property(nonatomic,strong)NSString *retrieve_type;
 
+@property(nonatomic,strong)NSString *topic_id;
+
 @end

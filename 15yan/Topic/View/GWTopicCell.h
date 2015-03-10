@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class GWFirstTopic;
+
 @interface GWTopicCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *background;
 @property (weak, nonatomic) IBOutlet UIImageView *topicImage;

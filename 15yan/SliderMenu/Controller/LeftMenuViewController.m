@@ -102,8 +102,8 @@
 	UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main"
                                                         bundle: nil];
     
-    GWTopicViewController *listViewController1 = [[GWTopicViewController alloc] initWithStyle:UITableViewStylePlain];
-    GWTopicViewController *listViewController2 = [[GWTopicViewController alloc] initWithStyle:UITableViewStylePlain];
+    GWTopicViewController *listViewController1 = [mainStoryboard instantiateViewControllerWithIdentifier: @"GWTopicViewController"];
+    GWTopicViewController *listViewController2 =[mainStoryboard instantiateViewControllerWithIdentifier: @"GWTopicViewController"];
     
     listViewController1.title = @"热门";
     listViewController1.by_key = @"top";
@@ -120,11 +120,12 @@
 	switch (indexPath.row)
 	{
 		case 0:
-			vc = [[HomeViewController alloc]init];
+			vc = [mainStoryboard instantiateViewControllerWithIdentifier: @"HomeViewController"];
 			break;
 			
 		case 1:
             tabBarController.delegate = self;
+            tabBarController.title = @"主题广场";
             vc = tabBarController;
 			break;
 			
@@ -143,5 +144,6 @@
 															 withSlideOutAnimation:self.slideOutAnimationEnabled
 																	 andCompletion:nil];
 }
+
 
 @end

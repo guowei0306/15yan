@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="124"/>
                     </imageView>
                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="rightMenu" translatesAutoresizingMaskIntoConstraints="NO" id="Cy7-YB-1A7" userLabel="Topic Image">
-                        <rect key="frame" x="1" y="1" width="373" height="122"/>
+                        <rect key="frame" x="4" y="2" width="367" height="120"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="美食指南" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nJW-fh-W95">
                         <rect key="frame" x="9" y="14" width="358" height="40"/>

@@ -11,4 +11,7 @@
 
 @interface HomeViewController : UITableViewController <SlideNavigationControllerDelegate>
 
+//@property(nonatomic,assign)BOOL by_top;
+//@property(nonatomic,copy)NSString *topic_id;
+
 @end

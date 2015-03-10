@@ -16,9 +16,14 @@
 #import "GWTopicListParam.h"
 #import "GWTopicListResult.h"
 #import "GWStatusTool.h"
+#import "HomeViewController.h"
+#import "GWFirstTopic.h"
+#import "SlideNavigationController.h"
+#import "GWTopArticlesViewController.h"
 
 @interface GWTopicViewController ()<MJRefreshBaseViewDelegate>
 @property (nonatomic,strong)NSMutableArray *topics;
+@property (nonatomic,strong)GWFirstTopic *selected_topic;
 @property (nonatomic,assign)long long total;
 @property(nonatomic,weak) MJRefreshFooterView *footer;
 @property(nonatomic,weak) MJRefreshHeaderView *header;
@@ -38,6 +43,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UIViewController *vc = [[UIViewController alloc]init];
+    vc.view.backgroundColor = [UIColor blueColor];
+    
+    UIStoryboardSegue *segue = [UIStoryboardSegue segueWithIdentifier:@"topic_articles" source:self destination:vc performHandler:^{
+        NSLog(@"跳转啦");
+    }];
+    
+    
     [self setupTableView];
     
     //集成刷新控件
@@ -201,6 +215,30 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
+#pragma mark 点击某篇文章，跳转到文章详情
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    GWFirstTopic *topic = self.topics[indexPath.row];
+    self.selected_topic = topic;
+    //    //请求文章详情接口
+    GWTopArticlesViewController *vc = [[GWTopArticlesViewController alloc]init];
+    vc.topic = topic;
+    SlideNavigationController *slider = (SlideNavigationController *)self.parentViewController.parentViewController;
+    [slider pushViewController:vc animated:NO];
+   
+}
+
+
+#pragma mark 
+#pragma mark 销毁前的函数
+- (void)dealloc
+{
+    [_header free];
+    [_footer free];
+}
+
+
 
 
 @end

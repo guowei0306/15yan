@@ -87,6 +87,10 @@
 		E79898001A78B8C3006F99DA /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E79897FF1A78B8C3006F99DA /* Images.xcassets */; };
 		E79898031A78B8C3006F99DA /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E79898011A78B8C3006F99DA /* LaunchScreen.xib */; };
 		E798980F1A78B8C3006F99DA /* _5yanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E798980E1A78B8C3006F99DA /* _5yanTests.m */; };
+		E7C35FAA1AAE8BBE00D264A7 /* WZFlashButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C35FA91AAE8BBE00D264A7 /* WZFlashButton.m */; };
+		E7C35FAD1AAEE04600D264A7 /* GWTopArticlesViewController.h.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C35FAC1AAEE04600D264A7 /* GWTopArticlesViewController.h.m */; };
+		E7C35FB31AAEE9BD00D264A7 /* GWTopicHeaderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C35FB21AAEE9BD00D264A7 /* GWTopicHeaderCell.m */; };
+		E7C35FB71AAF121800D264A7 /* GWTopicArticleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7C35FB51AAF121800D264A7 /* GWTopicArticleListCell.m */; };
 		E7F85ECD1AAD9627005ECE77 /* GWFirstTopic.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F85ECC1AAD9627005ECE77 /* GWFirstTopic.m */; };
 		E7F85ED11AAD9750005ECE77 /* GWTopicCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E7F85ECF1AAD9750005ECE77 /* GWTopicCell.m */; };
 		E7F85ED21AAD9750005ECE77 /* GWTopicCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E7F85ED01AAD9750005ECE77 /* GWTopicCell.xib */; };
@@ -264,6 +268,14 @@
 		E79898081A78B8C3006F99DA /* 15yanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 15yanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E798980D1A78B8C3006F99DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E798980E1A78B8C3006F99DA /* _5yanTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _5yanTests.m; sourceTree = "<group>"; };
+		E7C35FA81AAE8BBE00D264A7 /* WZFlashButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZFlashButton.h; sourceTree = "<group>"; };
+		E7C35FA91AAE8BBE00D264A7 /* WZFlashButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WZFlashButton.m; sourceTree = "<group>"; };
+		E7C35FAB1AAEE04600D264A7 /* GWTopArticlesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTopArticlesViewController.h; sourceTree = "<group>"; };
+		E7C35FAC1AAEE04600D264A7 /* GWTopArticlesViewController.h.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTopArticlesViewController.h.m; sourceTree = "<group>"; };
+		E7C35FB11AAEE9BD00D264A7 /* GWTopicHeaderCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTopicHeaderCell.h; sourceTree = "<group>"; };
+		E7C35FB21AAEE9BD00D264A7 /* GWTopicHeaderCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTopicHeaderCell.m; sourceTree = "<group>"; };
+		E7C35FB41AAF121800D264A7 /* GWTopicArticleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTopicArticleListCell.h; sourceTree = "<group>"; };
+		E7C35FB51AAF121800D264A7 /* GWTopicArticleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWTopicArticleListCell.m; sourceTree = "<group>"; };
 		E7F85ECB1AAD9627005ECE77 /* GWFirstTopic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWFirstTopic.h; sourceTree = "<group>"; };
 		E7F85ECC1AAD9627005ECE77 /* GWFirstTopic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GWFirstTopic.m; sourceTree = "<group>"; };
 		E7F85ECE1AAD9750005ECE77 /* GWTopicCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GWTopicCell.h; sourceTree = "<group>"; };
@@ -343,6 +355,8 @@
 		E742A4711AA69E9000DD6765 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				E7C35FA81AAE8BBE00D264A7 /* WZFlashButton.h */,
+				E7C35FA91AAE8BBE00D264A7 /* WZFlashButton.m */,
 				E78656921AAD49FB005B7BE3 /* MBProgressHUD */,
 				E78656821AAD3EB8005B7BE3 /* MJRefresh */,
 				E742A4F61AA6E45100DD6765 /* SDWebImage */,
@@ -554,6 +568,8 @@
 				E78656AA1AAD7F09005B7BE3 /* MHTabBarController.m */,
 				E78656A01AAD668F005B7BE3 /* GWTopicViewController.h */,
 				E78656A11AAD668F005B7BE3 /* GWTopicViewController.m */,
+				E7C35FAB1AAEE04600D264A7 /* GWTopArticlesViewController.h */,
+				E7C35FAC1AAEE04600D264A7 /* GWTopArticlesViewController.h.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -565,6 +581,10 @@
 				E7F85ECF1AAD9750005ECE77 /* GWTopicCell.m */,
 				E7F85ED01AAD9750005ECE77 /* GWTopicCell.xib */,
 				E7F85ED31AAD9769005ECE77 /* GWTopicCell_750.xib */,
+				E7C35FB11AAEE9BD00D264A7 /* GWTopicHeaderCell.h */,
+				E7C35FB21AAEE9BD00D264A7 /* GWTopicHeaderCell.m */,
+				E7C35FB41AAF121800D264A7 /* GWTopicArticleListCell.h */,
+				E7C35FB51AAF121800D264A7 /* GWTopicArticleListCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -876,6 +896,8 @@
 				E742A4CF1AA6A19100DD6765 /* GWBaseParam.m in Sources */,
 				E742A5201AA6E45100DD6765 /* UIImage+WebP.m in Sources */,
 				E7F85ECD1AAD9627005ECE77 /* GWFirstTopic.m in Sources */,
+				E7C35FB71AAF121800D264A7 /* GWTopicArticleListCell.m in Sources */,
+				E7C35FAA1AAE8BBE00D264A7 /* WZFlashButton.m in Sources */,
 				E742A51D1AA6E45100DD6765 /* UIButton+WebCache.m in Sources */,
 				E742A4EC1AA6B24500DD6765 /* MJMember.m in Sources */,
 				E742A4A61AA69F0300DD6765 /* AFHTTPRequestOperation.m in Sources */,
@@ -909,6 +931,7 @@
 				E742A4F51AA6B65100DD6765 /* MJTypeEncoding.m in Sources */,
 				E742A4D51AA6A7A200DD6765 /* GWStatusTool.m in Sources */,
 				E742A45D1AA5A59700DD6765 /* HomeViewController.m in Sources */,
+				E7C35FAD1AAEE04600D264A7 /* GWTopArticlesViewController.h.m in Sources */,
 				E742A5171AA6E45100DD6765 /* SDWebImageCompat.m in Sources */,
 				E742A5271AA6F7E000DD6765 /* GWAccount.m in Sources */,
 				E78656A21AAD668F005B7BE3 /* GWTopicViewController.m in Sources */,
@@ -923,6 +946,7 @@
 				E786568F1AAD3EB8005B7BE3 /* MJRefreshConst.m in Sources */,
 				E742A51B1AA6E45100DD6765 /* SDWebImageManager.m in Sources */,
 				E742A5421AA73B2D00DD6765 /* UIScrollView+TwitterCover.m in Sources */,
+				E7C35FB31AAEE9BD00D264A7 /* GWTopicHeaderCell.m in Sources */,
 				E742A5181AA6E45100DD6765 /* SDWebImageDecoder.m in Sources */,
 				E786568E1AAD3EB8005B7BE3 /* MJRefreshBaseView.m in Sources */,
 				E742A4AC1AA69F0300DD6765 /* AFURLRequestSerialization.m in Sources */,

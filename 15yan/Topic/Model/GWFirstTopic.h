@@ -67,4 +67,9 @@
  */
 @property(nonatomic,strong)NSArray *tags;
 
+/**
+ *  话题介绍
+ */
+@property(nonatomic,copy)NSString *introduction;
+
 @end

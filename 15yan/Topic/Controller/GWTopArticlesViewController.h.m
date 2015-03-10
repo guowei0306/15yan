@@ -1,14 +1,14 @@
 //
-//  HomeViewController.m
-//  SlideMenu
+//  GWTestViewController.m
+//  15yan
 //
-//  Created by Aryan Gh on 4/24/13.
-//  Copyright (c) 2013 Aryan Ghassemi. All rights reserved.
+//  Created by 郭薇 on 15/3/10.
+//  Copyright (c) 2015年 郭薇. All rights reserved.
 //
 
-#import "HomeViewController.h"
-#import "LeftMenuViewController.h"
-#import "GWStatusCell.h"
+#import "GWTopArticlesViewController.h"
+#import "GWTopicHeaderCell.h"
+#import "GWTopicArticleListCell.h"
 #import "GWHomeStatusesParam.h"
 #import "GWHomeStatusesResult.h"
 #import "GWStatusTool.h"
@@ -21,15 +21,14 @@
 #import "MBProgressHUD+MJ.h"
 
 
-@interface HomeViewController ()<MJRefreshBaseViewDelegate>
-
+@interface GWTopArticlesViewController ()<MJRefreshBaseViewDelegate>
 @property(nonatomic,strong) NSMutableArray *statuses;
 @property(nonatomic,copy) NSString *article_id;
 @property(nonatomic,weak) MJRefreshFooterView *footer;
 @property(nonatomic,weak) MJRefreshHeaderView *header;
 @end
 
-@implementation HomeViewController
+@implementation GWTopArticlesViewController
 
 #pragma mark
 #pragma mark 懒加载status
@@ -40,19 +39,31 @@
     }
     return _statuses;
 }
+//
+//-(instancetype)init{
+//    self = [super init];
+//    if (self) {
+//        
+//    }
+//    return self;
+//}
 
-#pragma mark
-#pragma mark 初始化
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setupTableView];
     
     //集成刷新控件
     [self setupRefreshView];
-    
 }
+
+-(void)setupTableView{
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.showsHorizontalScrollIndicator = NO;
+    self.tableView.showsVerticalScrollIndicator = NO;
+}
+
 
 -(void)setupRefreshView
 {
@@ -93,7 +104,8 @@
     //发送请求
     GWHomeStatusesParam *param = [[GWHomeStatusesParam alloc]init];
     param.limit = @(5);
-    param.retrieve_type = @"reading_list";
+    param.retrieve_type = @"by_topic";
+    param.topic_id = self.topic.id;
     
     if (self.statuses.count) {
         NSUInteger max_count = self.statuses.count;
@@ -131,8 +143,9 @@
     //封装参数
     GWHomeStatusesParam *param = [[GWHomeStatusesParam alloc]init];
     param.limit = @(10);
-    param.retrieve_type = @"reading_list";
-
+    param.retrieve_type = @"by_topic";
+    param.topic_id = self.topic.id;
+    
     param.offset = @(0);
     
     [GWStatusTool homeStatusWithParam:param success:^(GWHomeStatusesResult *result) {
@@ -153,93 +166,56 @@
     }];
 }
 
--(void)setupTableView
-{
-    UITableView *tableView = [[UITableView alloc]init];
-    tableView.frame = self.view.bounds;
-    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tableView.showsVerticalScrollIndicator = NO;
-    self.tableView = tableView;
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
 }
 
-
-#pragma mark
-#pragma mark SlideNavigationController Methods
-
-/**
- *  代理方法(是否展示左右两个菜单)
- *
- *  @return YES:显示菜单  NO:显示返回上一页图标
- */
 - (BOOL)slideNavigationControllerShouldDisplayLeftMenu
 {
-    return YES;
+    return NO;
 }
 
 - (BOOL)slideNavigationControllerShouldDisplayRightMenu
 {
-    return YES;
+    return NO;
 }
 
-#pragma mark
-#pragma mark tableview的数据源方法
 
--(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return _statuses.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //创建cell
-    GWStatusCell *cell = [GWStatusCell cellWithTableView:tableView];
-    
-    //传递模型
-    cell.status = self.statuses[indexPath.row];
-    
-    return  cell;
-}
-
-#pragma mark
-#pragma mark tableview代理方法
-
-/**
- *  设置cell高度
- *
- *  @param tableView
- *  @param indexPath
- *
- *  @return cell高度
- */
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 150;
-}
-
-#pragma mark 点击某篇文章，跳转到文章详情
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    GWStatus *status = self.statuses[indexPath.row];
-    self.article_id = status.id;
-//    //请求文章详情接口
-    [self performSegueWithIdentifier:@"article" sender:status.id];
-}
-
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    GWArticleViewController* view = segue.destinationViewController;
-    if ([view respondsToSelector:@selector(loadArticleDatas:)]) {
-        [view setValue:self.article_id forKey:@"param"];
+    if (indexPath.row == 0) {
+        GWTopicHeaderCell *cell = [GWTopicHeaderCell cellWithTableView:tableView];
+        cell.topic = self.topic;
+        return cell;
+    }else{
+        GWTopicArticleListCell *cell = [GWTopicArticleListCell cellWithTableView:tableView];
+        cell.status = self.statuses[indexPath.row];
+        return cell;
     }
+  
 }
 
-- (void)dealloc
-{
-    [ _header free ];
-    [ _footer free ];
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    CGFloat height;
+    if (indexPath.row == 0) {
+        height = 300;
+    }else{
+        height = 125;
+    }
+    return height;
 }
+
+-(void)dealloc{
+    [_header free];
+    [_footer free];
+}
+
 @end

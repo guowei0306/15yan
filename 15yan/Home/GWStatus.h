@@ -28,7 +28,7 @@
 /**
  *  阅读时间
  */
-@property(nonatomic,copy)NSString *read_cost;
+@property(nonatomic,assign)long long read_cost;
 
 /**
  *  来源类型

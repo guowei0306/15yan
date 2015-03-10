@@ -6,6 +6,7 @@
 //  Copyright (c) 2015年 郭薇. All rights reserved.
 //
 
+#define GWStatusTableBorder 2
 #import "GWTopicCell.h"
 #import "GWFirstTopic.h"
 #import "GWAccount.h"
@@ -51,6 +52,19 @@
     [self.topicImage setImageWithURL:[NSURL URLWithString:self.topic.image_thumbnail] placeholderImage:[UIImage imageNamed:@"rightMenu"]];
     self.topicNameLabel.text = topic.name;
     self.topicIntroLabel.text = [NSString stringWithFormat:@"%@ 主编 %zd人订阅",topic.owner_account.realname,topic.followers_count];
+    
+}
+
+#pragma mark
+#pragma mark 调整frame
+/**  拦截frame的设置 */
+-(void)setFrame:(CGRect)frame
+{
+    frame.origin.y += GWStatusTableBorder;
+//    frame.origin.x = GWStatusTableBorder;
+    frame.size.width -= GWStatusTableBorder * 2;
+    frame.size.height -= GWStatusTableBorder;
+    [super setFrame:frame];
     
 }
 @end

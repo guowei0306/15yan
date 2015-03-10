@@ -24,6 +24,7 @@
 
 #import "MHTabBarController.h"
 #import "UIImage+GW.h"
+
 static const float MARGIN_TOP = 66.0f;
 static const float TAB_BAR_HEIGHT = 44.0f;
 static const NSInteger TAG_OFFSET = 1000;
@@ -50,7 +51,7 @@ static const NSInteger TAG_OFFSET = 1000;
 
 - (BOOL)slideNavigationControllerShouldDisplayRightMenu
 {
-    return NO;
+    return YES;
 }
 
 - (void)centerIndicatorOnButton:(UIButton *)button
@@ -64,26 +65,14 @@ static const NSInteger TAG_OFFSET = 1000;
 
 - (void)selectTabButton:(UIButton *)button
 {
-    [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    
-    UIImage *image = [UIImage resizeImageWithName:@"MHTabBarActiveTab"];
-    [button setBackgroundImage:image forState:UIControlStateNormal];
-    [button setBackgroundImage:image forState:UIControlStateHighlighted];
-    
+    [button setBackgroundColor:[UIColor grayColor]];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [button setTitleShadowColor:[UIColor colorWithWhite:0.0f alpha:0.5f] forState:UIControlStateNormal];
 }
 
 - (void)deselectTabButton:(UIButton *)button
 {
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    
-    UIImage *image = [UIImage resizeImageWithName:@"MHTabBarInactiveTab"];
-    [button setBackgroundImage:image forState:UIControlStateNormal];
-    [button setBackgroundImage:image forState:UIControlStateHighlighted];
-    
-    [button setTitleColor:[UIColor colorWithRed:175/255.0f green:85/255.0f blue:58/255.0f alpha:1.0f] forState:UIControlStateNormal];
-    [button setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setBackgroundColor:[UIColor whiteColor]];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
 }
 
 - (void)removeTabButtons
