@@ -6,14 +6,18 @@
 //  Copyright (c) 2015年 郭薇. All rights reserved.
 //
 
+#define MARGIN 20
+#define PADDING 10
+
 #import "GWTopicHeaderCell.h"
 #import "GWFirstTopic.h"
 #import "UIImageView+WebCache.h"
 #import "UIImage+GW.h"
+#import "GWAccount.h"
 
 @interface GWTopicHeaderCell ()
 @property (nonatomic,weak) UIImageView *backView;
-@property (nonatomic,weak) UIImageView *iconView;
+@property (nonatomic,weak) UILabel *ownerLabel;
 @property (nonatomic,weak) UILabel *nameLabel;
 @property (nonatomic,weak) UILabel *introLabel;
 @property (nonatomic,weak) UIButton *bookButton;
@@ -53,12 +57,17 @@
     self.backView = backView;
     [self.contentView addSubview:backView];
     
-    UIImageView *iconView = [[UIImageView alloc]init];
-    self.iconView = iconView;
-    [self.contentView addSubview:iconView];
+    UILabel *ownerLabel = [[UILabel alloc]init];
+    [ownerLabel setFont:[UIFont fontWithName:@"Courier-Bold" size:15]];
+    ownerLabel.textAlignment = NSTextAlignmentCenter;
+    ownerLabel.textColor = [UIColor whiteColor];
+    self.ownerLabel = ownerLabel;
+    [self.contentView addSubview:ownerLabel];
     
     UILabel *nameLabel = [[UILabel alloc]init];
-    [nameLabel setFont:[UIFont fontWithName:@"Courier-Bold" size:25]];
+    [nameLabel setFont:[UIFont fontWithName:@"Courier-Bold" size:30]];
+    nameLabel.numberOfLines = 2;
+    nameLabel.textAlignment = NSTextAlignmentCenter;
     nameLabel.textColor = [UIColor whiteColor];
     self.nameLabel = nameLabel;
     [self.contentView addSubview:nameLabel];
@@ -66,11 +75,12 @@
     UILabel *introLabel = [[UILabel alloc]init];
     [introLabel setFont:[UIFont fontWithName:@"Courier" size:15]];
     introLabel.textColor = [UIColor whiteColor];
+    introLabel.numberOfLines = 3;
+    introLabel.textAlignment = NSTextAlignmentCenter;
     self.introLabel = introLabel;
     [self.contentView addSubview:introLabel];
     
     UIButton *bookButton = [[UIButton alloc]init];
-    
     [bookButton.layer setMasksToBounds:YES];
 //    [bookButton.layer setCornerRadius:8.0]; //设置矩圆角半径
     [bookButton.titleLabel setFont:[UIFont fontWithName:@"Courier" size:18]];
@@ -78,8 +88,8 @@
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
     CGColorRef colorref = CGColorCreate(colorSpace,(CGFloat[]){ 1, 1, 1, 1 });
     [bookButton.layer setBorderColor:colorref];//边框颜色
-    
     bookButton.backgroundColor = [UIColor clearColor];
+    
     [bookButton setTitle:@"订阅" forState:UIControlStateNormal];
     [bookButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [bookButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
@@ -92,9 +102,9 @@
     _topic = topic;
     //设置子控件的内容
     [self.backView setImageWithURL:[NSURL URLWithString:topic.image_blur]];
-    [self.iconView setImageWithURL:[NSURL URLWithString:topic.image] placeholderImage:[UIImage resizeImageWithName:@"timeline_card_bottom_background_os7"]];
     self.nameLabel.text = topic.name;
     self.introLabel.text = topic.introduction;
+    self.ownerLabel.text = [NSString stringWithFormat:@"主编 %@",topic.owner_account.realname];
 }
 
 -(void)layoutSubviews{
@@ -104,38 +114,36 @@
     //设置背景
     self.backView.frame = self.contentView.bounds;
     
-    //设置image
-    CGFloat imgW = 100;
-    CGFloat imgH = imgW;
-    CGFloat imgX = (frame.size.width - imgW) * 0.5;
-    CGFloat imgY = 15;
-    self.iconView.frame = CGRectMake(imgX, imgY, imgW, imgH);
+    //设置owner
+    CGFloat ownerX = MARGIN;
+    CGFloat ownerY = ownerX;
+    CGFloat ownerW = frame.size.width - (2 * ownerX);
+    CGFloat ownerH = 30;
+    self.ownerLabel.frame = CGRectMake(ownerX, ownerY, ownerW, ownerH);
     
     //设置title
-    CGFloat nameX = 20;
+    CGFloat nameX = MARGIN;
     CGFloat nameW = frame.size.width - 2 * nameX;
-    CGFloat nameH = 25;
-    CGFloat nameY = 10 + imgY + imgH;
-    self.nameLabel.numberOfLines = 1;
-    self.nameLabel.textAlignment = NSTextAlignmentCenter;
+    CGFloat nameH = 60;
+    CGFloat nameY = PADDING + CGRectGetMaxY(self.ownerLabel.frame);
     self.nameLabel.frame = CGRectMake(nameX, nameY, nameW, nameH);
     
     //设置描述
     CGFloat introX = nameX;
     CGFloat introW = frame.size.width - 2 * introX;
     CGFloat introH = 75;
-    CGFloat introY = nameY + 10 + nameH;
-    self.introLabel.numberOfLines = 3;
-    self.introLabel.textAlignment = NSTextAlignmentCenter;
+    CGFloat introY = CGRectGetMaxY(self.nameLabel.frame) + PADDING ;
     self.introLabel.frame = CGRectMake(introX, introY, introW, introH);
     
     //设置button
     CGFloat btnW = 100;
     CGFloat btnH = 36;
     CGFloat btnX = (frame.size.width - btnW) * 0.5;
-    CGFloat btnY = introY + 10 + introH;
+    CGFloat btnY = CGRectGetMaxY(self.introLabel.frame) + PADDING;
     self.bookButton.frame = CGRectMake(btnX, btnY, btnW, btnH);
     
     
 }
+
+
 @end

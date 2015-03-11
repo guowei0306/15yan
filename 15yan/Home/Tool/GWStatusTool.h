@@ -14,6 +14,8 @@
 #import "GWArticleResult.h"
 #import "GWTopicListParam.h"
 #import "GWTopicListResult.h"
+#import "GWAccountParam.h"
+#import "GWAccountResult.h"
 
 @interface GWStatusTool : NSObject
 
@@ -44,5 +46,14 @@
  *  @param failure 请求失败后的回调
  */
 +(void)topicListWithParam:(GWTopicListParam *)param success:(void (^)(GWTopicListResult *result))success failure:(void (^)(NSError *error))failure;
+
+/**
+ *  加载用户数据
+ *
+ *  @param param   请求参数
+ *  @param success 请求成功后的回调
+ *  @param failure 请求失败后的回调
+ */
++(void)accountsRecommendWithParam:(GWAccountParam *)param success:(void (^)(GWAccountResult *result))success failure:(void (^)(NSError *error))failure;
 
 @end

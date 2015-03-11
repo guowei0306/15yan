@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-@class GWArticle;
+#import "SlideNavigationController.h"
+@class GWArticle,GWStatus;
 
-@interface GWArticleViewController : UIViewController<UIScrollViewDelegate>
+@interface GWArticleViewController : UIViewController<UIScrollViewDelegate,SlideNavigationControllerDelegate>
 
-@property(nonatomic,strong) GWArticle *article;
-
--(void)loadArticleDatas:(NSString *)story_id;
-@property (strong, nonatomic) NSString *param;
+@property (strong, nonatomic) NSString *story_id;
+@property (nonatomic,strong)GWStatus *nextStatus;
 
 @end

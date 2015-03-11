@@ -24,7 +24,6 @@
 @interface HomeViewController ()<MJRefreshBaseViewDelegate>
 
 @property(nonatomic,strong) NSMutableArray *statuses;
-@property(nonatomic,copy) NSString *article_id;
 @property(nonatomic,weak) MJRefreshFooterView *footer;
 @property(nonatomic,weak) MJRefreshHeaderView *header;
 @end
@@ -225,17 +224,14 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     GWStatus *status = self.statuses[indexPath.row];
-    self.article_id = status.id;
-//    //请求文章详情接口
-    [self performSegueWithIdentifier:@"article" sender:status.id];
+    GWStatus *nextStatus = self.statuses[indexPath.row + 1];
+    GWArticleViewController *vc = [[GWArticleViewController alloc]init];
+    [vc setValue:status.id forKey:@"story_id"];
+    vc.nextStatus = nextStatus;
+    SlideNavigationController *slider = (SlideNavigationController *)self.parentViewController;
+    [slider pushViewController:vc animated:NO];
 }
 
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    GWArticleViewController* view = segue.destinationViewController;
-    if ([view respondsToSelector:@selector(loadArticleDatas:)]) {
-        [view setValue:self.article_id forKey:@"param"];
-    }
-}
 
 - (void)dealloc
 {

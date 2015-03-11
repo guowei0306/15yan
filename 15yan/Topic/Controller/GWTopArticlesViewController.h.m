@@ -23,7 +23,6 @@
 
 @interface GWTopArticlesViewController ()<MJRefreshBaseViewDelegate>
 @property(nonatomic,strong) NSMutableArray *statuses;
-@property(nonatomic,copy) NSString *article_id;
 @property(nonatomic,weak) MJRefreshFooterView *footer;
 @property(nonatomic,weak) MJRefreshHeaderView *header;
 @end
@@ -39,14 +38,6 @@
     }
     return _statuses;
 }
-//
-//-(instancetype)init{
-//    self = [super init];
-//    if (self) {
-//        
-//    }
-//    return self;
-//}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -206,7 +197,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     CGFloat height;
     if (indexPath.row == 0) {
-        height = 300;
+        height = 280;
     }else{
         height = 125;
     }
@@ -216,6 +207,20 @@
 -(void)dealloc{
     [_header free];
     [_footer free];
+}
+
+#pragma mark
+#pragma mark 选中某一行后的操作
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    GWStatus *status = self.statuses[indexPath.row];
+    GWStatus *nextStatus = self.statuses[indexPath.row + 1];
+    GWArticleViewController *vc = [[GWArticleViewController alloc]init];
+    [vc setValue:status.id forKey:@"story_id"];
+    vc.nextStatus = nextStatus;
+    SlideNavigationController *slider = (SlideNavigationController *)self.parentViewController;
+    [slider pushViewController:vc animated:NO];
+    
 }
 
 @end

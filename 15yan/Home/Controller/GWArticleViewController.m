@@ -13,24 +13,16 @@
 #import "GWArticleResult.h"
 #import "GWAccount.h"
 #import "UIImageView+WebCache.h"
+#import "GWArticleContentView.h"
 
-#if iPhone5
-#define ImageWidth 320
-
-#else
-#define ImageWidth 375
-#endif
-
-#define ImageHeight 300
 
 @interface GWArticleViewController ()
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *topImageView;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *authorLabel;
-@property (weak, nonatomic) IBOutlet UILabel *content;
-
+@property (assign, nonatomic) CGFloat ImageWidth;
+@property (assign, nonatomic) CGFloat ImageHeight;
+@property (weak, nonatomic) GWArticleContentView *scrollView;
+@property (weak, nonatomic) UIImageView *topImageView;
+@property(nonatomic,strong) GWArticle *article;
+@property(nonatomic,strong)NSMutableArray *recommendAccounts;
 @end
 
 @implementation GWArticleViewController
@@ -38,8 +30,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self setupSubViews];
-    [self loadArticleDatas:self.param];
+    [self loadArticleDatas:self.story_id];
+    [self loadRecommendAccounts:self.story_id];
+    
 
 }
 
@@ -49,11 +44,27 @@
     //封装参数
     GWArticleParam *param = [[GWArticleParam alloc]init];
     param.story_id = story_id;
-    
     [GWStatusTool articleStatusWithParam:param success:^(GWArticleResult *result) {
         //将字典数组转为模型数组
         self.article = result.result[0];
         [self setupContent];
+        self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, self.scrollView.heightForArticleContentView);
+    } failure:^(NSError *error) {
+        
+    }];
+}
+
+-(void)loadRecommendAccounts:(NSString *)story_id{
+    GWAccountParam *param = [[GWAccountParam alloc]init];
+    param.retrieve_type = @"by_story_recommend";
+    param.story_id = self.story_id;
+    [GWStatusTool accountsRecommendWithParam:param success:^(GWAccountResult *result) {
+        //将字典数组转为模型数组
+        NSMutableArray *accountArray = [NSMutableArray array];
+        for (GWAccount *account in result.result) {
+            [accountArray addObject:account];
+        }
+        self.recommendAccounts = accountArray;
     } failure:^(NSError *error) {
         
     }];
@@ -61,21 +72,33 @@
 
 -(void)setupSubViews
 {
-    self.scrollView.contentSize = CGSizeMake(self.view.bounds.size.width, 1000);
-    self.scrollView.showsHorizontalScrollIndicator = NO;
-    self.scrollView.showsVerticalScrollIndicator = NO;
+    
+    UIImageView *topImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 240)];
+    self.ImageWidth = topImageView.frame.size.width;
+    self.ImageHeight = topImageView.frame.size.height;
+    self.topImageView = topImageView;
+    [self.view addSubview:topImageView];
+    
+    GWArticleContentView *scrollView = [[GWArticleContentView alloc]initWithFrame:self.view.bounds];
+    scrollView.scrollEnabled = YES;
+    scrollView.showsHorizontalScrollIndicator = NO;
+    scrollView.showsVerticalScrollIndicator = NO;
+    scrollView.delegate = self;
+    self.scrollView = scrollView;
+    [self.view addSubview:scrollView];
     
 }
 
 -(void)setupContent
 {
-    self.titleLabel.text = self.article.title;
-    self.subtitleLabel.text = self.article.subtitle;
-    self.authorLabel.text = [NSString stringWithFormat:@"%@  发表于  %@",self.article.account.realname,self.article.first_topic.name];
-//    [self.topImageView setImageWithURL:[NSURL URLWithString:self.article.image] placeholderImage:[UIImage imageNamed:@"rightMenu"]];
-    //暂时不需要placeholderImage
-     [self.topImageView setImageWithURL:[NSURL URLWithString:self.article.image]];
-    self.content.text = self.article.content;
+    self.scrollView.article = self.article;
+    self.scrollView.recommendAccounts = self.recommendAccounts;
+    self.scrollView.nextStatus = self.nextStatus;
+    if ([self.article.image isEqualToString:@""] || self.article.image == nil) {
+        [self.topImageView setImage:[UIImage imageNamed:@"cover"]];
+    }else{
+        [self.topImageView setImageWithURL:[NSURL URLWithString:self.article.image]];
+    }
 }
 
 
@@ -85,8 +108,8 @@
 {
     CGFloat yOffset   = self.scrollView.contentOffset.y;
     if (yOffset < 0) {//起始点不是从0开始
-        CGFloat factor = ((ABS(yOffset)+ImageHeight)*ImageWidth)/ImageHeight;//放大的比例
-        CGRect f = CGRectMake(-(factor-ImageWidth)/2, 0, factor, ImageHeight+ABS(yOffset));
+        CGFloat factor = ((ABS(yOffset)+self.ImageHeight)*self.ImageWidth)/self.ImageHeight;//放大的比例
+        CGRect f = CGRectMake(-(factor-self.ImageWidth)/2, 0, factor, self.ImageHeight+ABS(yOffset));
         self.topImageView.frame = f;
     }else {
         CGRect f = self.topImageView.frame;
@@ -100,6 +123,22 @@
     [super didReceiveMemoryWarning];
 }
 
+#pragma mark
+#pragma mark SlideNavigationController Methods
 
+/**
+ *  代理方法(是否展示左右两个菜单)
+ *
+ *  @return YES:显示菜单  NO:显示返回上一页图标
+ */
+- (BOOL)slideNavigationControllerShouldDisplayLeftMenu
+{
+    return NO;
+}
+
+- (BOOL)slideNavigationControllerShouldDisplayRightMenu
+{
+    return NO;
+}
 
 @end

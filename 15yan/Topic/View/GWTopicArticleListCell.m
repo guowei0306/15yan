@@ -71,6 +71,7 @@
     
     UILabel *authorLabel = [[UILabel alloc]init];
     [authorLabel setFont:[UIFont fontWithName:@"Courier" size:13]];
+    authorLabel.textColor = [UIColor grayColor];
     self.authorLabel = authorLabel;
     [self.contentView addSubview:authorLabel];
     
@@ -82,7 +83,9 @@
     self.titleLabel.text = status.title;
     self.subtitleLabel.text = status.subtitle;
     self.authorLabel.text = [NSString stringWithFormat:@"%@ %zd分钟阅读",status.account.realname,status.read_cost];
-    [self.iconView setImageWithURL:[NSURL URLWithString:status.image_thumbnail]];
+    self.iconView.layer.masksToBounds = YES;
+    self.iconView.layer.cornerRadius = 38;
+    [self.iconView setImageWithURL:[NSURL URLWithString:status.account.avatar] placeholderImage:[UIImage imageNamed:@"1"]];
 }
 
 

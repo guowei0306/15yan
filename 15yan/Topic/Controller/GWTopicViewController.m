@@ -224,6 +224,7 @@
     //    //请求文章详情接口
     GWTopArticlesViewController *vc = [[GWTopArticlesViewController alloc]init];
     vc.topic = topic;
+    vc.title = topic.name;
     SlideNavigationController *slider = (SlideNavigationController *)self.parentViewController.parentViewController;
     [slider pushViewController:vc animated:NO];
    

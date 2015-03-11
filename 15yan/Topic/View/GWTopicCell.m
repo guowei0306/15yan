@@ -60,7 +60,7 @@
 /**  拦截frame的设置 */
 -(void)setFrame:(CGRect)frame
 {
-    frame.origin.y += GWStatusTableBorder;
+//    frame.origin.y += GWStatusTableBorder;
 //    frame.origin.x = GWStatusTableBorder;
     frame.size.width -= GWStatusTableBorder * 2;
     frame.size.height -= GWStatusTableBorder;

@@ -83,7 +83,7 @@
         <!--文章详情-->
         <scene sceneID="8Ve-De-7Nl">
             <objects>
-                <viewController id="ufR-MZ-3hy" customClass="GWArticleViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GWArticleViewController" id="ufR-MZ-3hy" customClass="GWArticleViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i3B-eu-9WI"/>
                         <viewControllerLayoutGuide type="bottom" id="hCQ-Rk-mCE"/>

@@ -61,4 +61,18 @@
     }];
     
 }
+
++(void)accountsRecommendWithParam:(GWAccountParam *)param success:(void (^)(GWAccountResult *result))success failure:(void (^)(NSError *error))failure{
+    [GWHttpTool getWithUrl:@"http://www.15yan.com/apis/account.json" params:param.keyValues success:^(id json) {
+        if (success) {
+            GWAccountResult *result = [GWAccountResult objectWithKeyValues:json];
+            success(result);
+        }
+    } failure:^(NSError *error) {
+        if (failure) {
+            failure(error);
+            NSLog(@"failure%@",error);
+        }
+    }];
+}
 @end
